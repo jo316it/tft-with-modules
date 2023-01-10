@@ -9,3 +9,4 @@ output "subnet_a_id" {
 output "subnet_b_id" {
     value = aws_subnet.public-sub-B.id
 }
+
