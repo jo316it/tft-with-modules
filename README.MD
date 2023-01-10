@@ -10,5 +10,4 @@ This code will create a little infrastructure in AWS with:
 
 Almost all dymamic data can be modified through the files "local.tf" and variables.tf inside of the modules directory.
 
-Important: Inside the "keys" directory in the EC2 module, there is a shell script that generates a pair of keys to access the instance.
-Remember to change the name in the file() function so the code can copy the public key to the instance
+Important: To access Instance per SSH, use the script "Key Gen" in the root patch. Remeber of change the variable name in the function file() on the file main in ec2 module. 
