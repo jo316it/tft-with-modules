@@ -14,7 +14,7 @@ resource "aws_vpc" "this" {
 resource "aws_subnet" "public-sub-A" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = "192.168.0.0/25"
-  availability_zone = "us-west-2a"
+  availability_zone = "us-east-1a"
 
 
   tags = {
@@ -25,8 +25,7 @@ resource "aws_subnet" "public-sub-A" {
 resource "aws_subnet" "public-sub-B" {
   cidr_block        = "192.168.0.128/25"
   vpc_id            = aws_vpc.this.id
-  availability_zone = "us-west-2a"
-
+  availability_zone = "us-east-1a"
 
   tags = {
     "Name" = "${var.application_name}_public-sub-B"

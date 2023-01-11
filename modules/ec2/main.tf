@@ -20,12 +20,11 @@ resource "aws_security_group" "juice_sg_ssh" {
 
   }
 
-  egress  {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "Access SSH"
+  egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "tcp"
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
 
   }
 
@@ -34,12 +33,20 @@ resource "aws_security_group" "juice_sg_ssh" {
 
 resource "aws_instance" "this" {
 
-  ami                         = "ami-0d31d7c9fc9503726"
+  ami                         = "ami-0b93ce03dcbcb10f6"
   instance_type               = "t2.micro"
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
   key_name                    = aws_key_pair.this.key_name
   security_groups             = [aws_security_group.juice_sg_ssh.id]
+  user_data                   = <<-EOF
+                                #! /bin/bash
+                                touch /tmp/install.log &&
+                                echo "Iniciou" >> /tmp/install.log &&
+                                sudo apt update -y &&
+                                curl https://releases.rancher.com/install-docker/19.03.sh | sh &&
+                                sudo usermod -aG docker ubuntu
+                                EOF
   tags = {
     "Name" = "${var.application_name}_public-ec2"
   }
